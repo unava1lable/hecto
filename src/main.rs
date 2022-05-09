@@ -1,3 +1,4 @@
+use core::panic;
 use std::io::{self, Read};
 use termion::raw::IntoRawMode;
 
@@ -18,4 +19,8 @@ fn main() {
 fn to_ctrl_byte(c: char) -> u8 {
     let b = c as u8;
     b & 0b00011111
+}
+
+fn die(e: io::Error) {
+    panic!("{}", e);
 }
