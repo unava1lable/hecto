@@ -1,28 +1,26 @@
-use core::panic;
-use std::io::{self, Read};
+use std::io;
 use termion::raw::IntoRawMode;
+use termion::event::Key;
+use termion::input::TermRead;
 
 fn main() {
     let _stdout = io::stdout().into_raw_mode().unwrap();
-    for b in io::stdin().bytes() {
-        match b {
-            Ok(b) => {
-                let c = b as char;
-                if c.is_control() {
-                    println!("{:?}\r", b);
-                } else {
-                    println!("{:?} ({})", b, c);
+    for key in io::stdin().keys() {
+        match key {
+            Ok(key) => match key {
+                Key::Char(c) => {
+                    if c.is_control() {
+                        println!("{:?}\r", c as u8);
+                    } else {
+                        println!("{:?} ({})\r", c as u8, c);
+                    }
                 }
-                if b == to_ctrl_byte('q') {break;}
-            }
+                Key::Ctrl('q') => break,
+                _ => println!("{:?}\r", key),
+            },
             Err(e) => die(e),
         }
     }
-}
-
-fn to_ctrl_byte(c: char) -> u8 {
-    let b = c as u8;
-    b & 0b00011111
 }
 
 fn die(e: io::Error) {
