@@ -40,7 +40,19 @@ impl Editor {
 
 	fn refresh_screen(&self) -> Result<(), io::Error> {
 		print!("{}{}", termion::clear::All, termion::cursor::Goto(1,1));
+		if self.shoult_quit {
+			println!("Goodbye!\r");
+		} else {
+			self.draw_row();
+			print!("{}", termion::cursor::Goto(1,1))
+		}
 		io::stdout().flush()
+	}
+
+	fn draw_row(&self) {
+		for _ in 0..24 {
+			println!("~\r");
+		}
 	}
 }
 
