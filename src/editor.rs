@@ -38,19 +38,22 @@ impl Editor {
 	}
 
 	fn refresh_screen(&self) -> Result<(), std::io::Error> {
-		Terminal::clear_screen();
+		Terminal::cursor_hide();
 		Terminal::cursor_position(0, 0);
 		if self.shoult_quit {
+			Terminal::clear_screen();
 			println!("Goodbye!\r");
 		} else {
 			self.draw_row();
 			Terminal::cursor_position(0, 0);
 		}
+		Terminal::cursor_show();
 		Terminal::flush()
 	}
 
 	fn draw_row(&self) {
-		for _ in 0..self.terminal.size().height {
+		for _ in 0..self.terminal.size().height-1 {
+			Terminal::clear_current_line();
 			println!("~\r");
 		}
 	}
