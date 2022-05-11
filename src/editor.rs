@@ -1,16 +1,19 @@
+use crate::Terminal;
 use std::io::{self, Write};
 use termion::raw::IntoRawMode;
 use termion::event::Key;
 use termion::input::TermRead;
 
 pub struct Editor {
-	shoult_quit: bool
+	shoult_quit: bool,
+	terminal: Terminal,
 }
 
 impl Editor {
 	pub fn default() -> Self {
 		Self {
-			shoult_quit: false
+			shoult_quit: false,
+			terminal: Terminal::default().expect("Failed to initialize terminal")
 		}
 	}
 
@@ -50,7 +53,7 @@ impl Editor {
 	}
 
 	fn draw_row(&self) {
-		for _ in 0..24 {
+		for _ in 0..self.terminal.size().height {
 			println!("~\r");
 		}
 	}
