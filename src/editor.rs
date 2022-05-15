@@ -84,6 +84,7 @@ impl Editor {
 		let pressed_key = Terminal::read_key()?;
 		match pressed_key {
 			Key::Ctrl('q') => self.shoult_quit = true,
+			Key::Char(c) => self.document.insert(&self.cursor_position, c),
 			Key::Up 
 			|Key::Down 
 			|Key::Left 
