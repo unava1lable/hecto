@@ -7,10 +7,11 @@
 	clippy::wildcard_enum_match_arm,            
 	clippy::else_if_without_else            
 )]
-mod editor;
-mod terminal;
-mod row;
+
 mod document;
+mod editor;
+mod row;
+mod terminal;
 
 pub use row::Row;
 pub use document::Document;

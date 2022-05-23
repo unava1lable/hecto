@@ -146,7 +146,7 @@ impl Editor {
 					return Ok(());
 				}
 				self.shoult_quit = true;
-			},
+			} 
 			Key::Ctrl('s') => self.save(),
 			Key::Ctrl('f') => self.search(),
 			Key::Char(c) => {
